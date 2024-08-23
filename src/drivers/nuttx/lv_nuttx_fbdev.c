@@ -140,7 +140,7 @@ int lv_nuttx_fbdev_set_file(lv_display_t * disp, const char * file)
             goto errout;
         }
 
-        lv_draw_buf_init(&dsc->buf2, w, h, color_format, stride, dsc->mem2, data_size);
+        lv_draw_buf_init(&dsc->buf2, w, h, LV_COLOR_FORMAT_NATIVE, stride, dsc->mem2, data_size);
         lv_display_set_draw_buffers(disp, &dsc->buf1, &dsc->buf2);
     }
     else {
@@ -153,11 +153,11 @@ int lv_nuttx_fbdev_set_file(lv_display_t * disp, const char * file)
         }
 
         LV_LOG_USER("Use off-screen mode, memory: %p, size: %" LV_PRIu32, dsc->mem_off_screen, data_size);
-        lv_draw_buf_init(&dsc->buf2, w, h, color_format, stride, dsc->mem_off_screen, data_size);
+        lv_draw_buf_init(&dsc->buf2, w, h, LV_COLOR_FORMAT_NATIVE, stride, dsc->mem_off_screen, data_size);
         lv_display_set_draw_buffers(disp, &dsc->buf2, NULL);
     }
 
-    lv_display_set_color_format(disp, color_format);
+    lv_display_set_color_format(disp, LV_COLOR_FORMAT_NATIVE);
     lv_display_set_render_mode(disp, LV_DISPLAY_RENDER_MODE_DIRECT);
     lv_display_set_resolution(disp, dsc->vinfo.xres, dsc->vinfo.yres);
     lv_timer_set_cb(disp->refr_timer, display_refr_timer_cb);
